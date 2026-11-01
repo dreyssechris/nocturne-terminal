@@ -1,0 +1,141 @@
+{
+    "global": {
+        "theme": "Nocturne",
+        "useAcrylicInTabRow": false
+    },
+    "defaults": {
+        "adjustIndistinguishableColors": "indexed",
+        "antialiasingMode": "cleartype",
+        "bellStyle": ["window", "taskbar"],
+        "colorScheme": "Nocturne",
+        "font": {
+            "cellHeight": "1.25",
+            "face": "JetBrainsMono Nerd Font",
+            "features": {},
+            "size": 11,
+            "weight": "normal"
+        },
+        "intenseTextStyle": "all",
+        "opacity": 100,
+        "padding": "12, 8",
+        "useAcrylic": false
+    },
+    "removeFromDefaults": [
+        "backgroundImage",
+        "backgroundImageOpacity",
+        "backgroundImageStretchMode",
+        "backgroundImageAlignment"
+    ],
+    "schemes": [
+        {
+            "name": "Nocturne",
+            "background": "#0B0D0E",
+            "foreground": "#C9CDD1",
+            "cursorColor": "#57B083",
+            "selectionBackground": "#3C6157",
+            "black": "#15191B",
+            "red": "#CF6A6A",
+            "green": "#57B083",
+            "yellow": "#C9B37A",
+            "blue": "#6E93A8",
+            "purple": "#A58AA8",
+            "cyan": "#5FA39A",
+            "white": "#C9CDD1",
+            "brightBlack": "#6B757C",
+            "brightRed": "#E08585",
+            "brightGreen": "#7CC9A0",
+            "brightYellow": "#E0CC94",
+            "brightBlue": "#8FB2C6",
+            "brightPurple": "#BFA8C2",
+            "brightCyan": "#84C4BB",
+            "brightWhite": "#EEF0F2"
+        },
+        {
+            "name": "Kanagawa Wave",
+            "background": "#1F1F28",
+            "foreground": "#DCD7BA",
+            "cursorColor": "#C8C093",
+            "selectionBackground": "#2D4F67",
+            "black": "#090618",
+            "red": "#C34043",
+            "green": "#76946A",
+            "yellow": "#C0A36E",
+            "blue": "#7E9CD8",
+            "purple": "#957FB8",
+            "cyan": "#6A9589",
+            "white": "#C8C093",
+            "brightBlack": "#727169",
+            "brightRed": "#E82424",
+            "brightGreen": "#98BB6C",
+            "brightYellow": "#E6C384",
+            "brightBlue": "#7FB4CA",
+            "brightPurple": "#938AA9",
+            "brightCyan": "#7AA89F",
+            "brightWhite": "#DCD7BA"
+        },
+        {
+            "name": "Tokyo Night",
+            "background": "#1A1B26",
+            "foreground": "#C0CAF5",
+            "cursorColor": "#C0CAF5",
+            "selectionBackground": "#33467C",
+            "black": "#15161E",
+            "red": "#F7768E",
+            "green": "#9ECE6A",
+            "yellow": "#E0AF68",
+            "blue": "#7AA2F7",
+            "purple": "#BB9AF7",
+            "cyan": "#7DCFFF",
+            "white": "#A9B1D6",
+            "brightBlack": "#414868",
+            "brightRed": "#F7768E",
+            "brightGreen": "#9ECE6A",
+            "brightYellow": "#E0AF68",
+            "brightBlue": "#7AA2F7",
+            "brightPurple": "#BB9AF7",
+            "brightCyan": "#7DCFFF",
+            "brightWhite": "#C0CAF5"
+        },
+        {
+            "name": "Catppuccin Mocha",
+            "background": "#1E1E2E",
+            "foreground": "#CDD6F4",
+            "cursorColor": "#F5E0DC",
+            "selectionBackground": "#585B70",
+            "black": "#45475A",
+            "red": "#F38BA8",
+            "green": "#A6E3A1",
+            "yellow": "#F9E2AF",
+            "blue": "#89B4FA",
+            "purple": "#F5C2E7",
+            "cyan": "#94E2D5",
+            "white": "#BAC2DE",
+            "brightBlack": "#585B70",
+            "brightRed": "#F38BA8",
+            "brightGreen": "#A6E3A1",
+            "brightYellow": "#F9E2AF",
+            "brightBlue": "#89B4FA",
+            "brightPurple": "#F5C2E7",
+            "brightCyan": "#94E2D5",
+            "brightWhite": "#A6ADC8"
+        }
+    ],
+    "themes": [
+        {
+            "name": "Nocturne",
+            "tab": {
+                "background": "terminalBackground",
+                "showCloseButton": "hover",
+                "unfocusedBackground": "#00000000"
+            },
+            "tabRow": {
+                "background": "#060708FF",
+                "unfocusedBackground": "#060708FF"
+            },
+            "window": {
+                "applicationTheme": "dark",
+                "useMica": false
+            }
+        }
+    ]
+}

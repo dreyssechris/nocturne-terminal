@@ -1,0 +1,26 @@
+# Nocturne terminal palette (Ghostty format).
+# Also importable in Orca: Settings > Terminal > Import (Ghostty config).
+background = #0b0d0e
+foreground = #c9cdd1
+cursor-color = #57b083
+cursor-text = #0b0d0e
+selection-background = #3c6157
+selection-foreground = #eef0f2
+palette = 0=#15191b
+palette = 1=#cf6a6a
+palette = 2=#57b083
+palette = 3=#c9b37a
+palette = 4=#6e93a8
+palette = 5=#a58aa8
+palette = 6=#5fa39a
+palette = 7=#c9cdd1
+palette = 8=#6b757c
+palette = 9=#e08585
+palette = 10=#7cc9a0
+palette = 11=#e0cc94
+palette = 12=#8fb2c6
+palette = 13=#bfa8c2
+palette = 14=#84c4bb
+palette = 15=#eef0f2
+font-family = JetBrainsMono Nerd Font
+font-size = 11
