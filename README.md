@@ -10,21 +10,30 @@ A calm, near black terminal look for Windows Terminal, matching the [Nocturne Ob
 - **JetBrainsMono Nerd Font** at 11pt with line height 1.25 and ClearType, so prompt icons (oh-my-posh) keep working
 - **Bell notifications:** when a tab rings the bell, the taskbar flashes and the tab shows a bell icon. Handy with Claude Code: `/config` → Notifications → Terminal Bell
 
-## Install
+## Quick setup
+
+Open PowerShell on the new machine (no admin needed) and run this one line:
+
+```powershell
+irm https://raw.githubusercontent.com/dreyssechris/nocturne-terminal/main/install.ps1 | iex
+```
+
+That's it. Windows Terminal reloads on its own; restart it once if the font does not show up yet.
+Works with Windows PowerShell 5.1 and PowerShell 7, no git and no script file needed.
+
+**With options** (for example when a company proxy blocks the font download):
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dreyssechris/nocturne-terminal/main/install.ps1))) -SkipFont -WithOhMyPosh
+```
+
+## Install from a clone
 
 ```powershell
 git clone https://github.com/dreyssechris/nocturne-terminal.git
 cd nocturne-terminal
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
-
-Or without git:
-
-```powershell
-irm https://raw.githubusercontent.com/dreyssechris/nocturne-terminal/main/install.ps1 | iex
-```
-
-No admin rights needed. Works with Windows PowerShell 5.1 and PowerShell 7.
 
 ### Options
 
