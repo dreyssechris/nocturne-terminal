@@ -48,12 +48,15 @@ function Set-Prop($Obj, [string]$Name, $Value) {
 
 function Install-NocturneFont {
     $userReg = 'HKCU:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts'
-    $names = @()
-    foreach ($key in $userReg, 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts') {
-        $props = Get-ItemProperty $key -ErrorAction SilentlyContinue
-        if ($props) { $names += $props.PSObject.Properties.Name }
-    }
-    if ($names | Where-Object { $_ -like 'JetBrainsMono NF *' }) {
+    $dest = Join-Path $env:LOCALAPPDATA 'Microsoft\Windows\Fonts'
+
+    # Counts as installed only when the Regular style exists as a file (per user or system wide).
+    # A half finished earlier run therefore does not block a new attempt.
+    $regular = @(
+        (Join-Path $dest 'JetBrainsMonoNerdFont-Regular.ttf'),
+        (Join-Path $env:WINDIR 'Fonts\JetBrainsMonoNerdFont-Regular.ttf')
+    )
+    if ($regular | Where-Object { Test-Path $_ }) {
         Write-Host 'JetBrainsMono Nerd Font is already installed.' -ForegroundColor DarkGray
         return
     }
@@ -66,24 +69,36 @@ function Install-NocturneFont {
         Invoke-WebRequest -UseBasicParsing 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip' -OutFile $zip
         Expand-Archive $zip -DestinationPath $tmp -Force
 
-        $dest = Join-Path $env:LOCALAPPDATA 'Microsoft\Windows\Fonts'
         New-Item -ItemType Directory -Force $dest | Out-Null
-        Add-Type -AssemblyName PresentationCore
-        Add-Type -Namespace Nocturne -Name Gdi -MemberDefinition @'
+        if (-not ('Nocturne.Gdi' -as [type])) {
+            Add-Type -Namespace Nocturne -Name Gdi -MemberDefinition @'
 [DllImport("gdi32.dll", CharSet = CharSet.Unicode)] public static extern int AddFontResourceW(string file);
 [DllImport("user32.dll")] public static extern IntPtr SendMessageTimeoutW(IntPtr hWnd, uint msg, IntPtr w, IntPtr l, uint flags, uint timeout, out IntPtr result);
 '@
+        }
+
+        $installed = 0
+        $failed = @()
         foreach ($font in Get-ChildItem $tmp -Filter 'JetBrainsMonoNerdFont-*.ttf') {
-            $target = Join-Path $dest $font.Name
-            Copy-Item $font.FullName $target -Force
-            $glyph = New-Object System.Windows.Media.GlyphTypeface ([uri]$target)
-            $regName = '{0} {1} (TrueType)' -f $glyph.Win32FamilyNames['en-us'], $glyph.Win32FaceNames['en-us']
-            New-ItemProperty -Path $userReg -Name $regName -Value $target -PropertyType String -Force | Out-Null
-            [void][Nocturne.Gdi]::AddFontResourceW($target)
+            try {
+                $target = Join-Path $dest $font.Name
+                # Skip the copy when an identical file is already there (it may be locked by running apps)
+                if (-not (Test-Path $target) -or (Get-Item $target).Length -ne $font.Length) {
+                    Copy-Item $font.FullName $target -Force
+                }
+                # Registry name from the file name, e.g. JetBrainsMonoNerdFont-BoldItalic.ttf
+                # becomes "JetBrainsMono NF Bold Italic (TrueType)". Windows only uses it as a label.
+                $style = (($font.BaseName -split '-', 2)[1]) -replace '(?<=.)Italic$', ' Italic'
+                New-ItemProperty -Path $userReg -Name "JetBrainsMono NF $style (TrueType)" -Value $target -PropertyType String -Force | Out-Null
+                [void][Nocturne.Gdi]::AddFontResourceW($target)
+                $installed++
+            }
+            catch { $failed += $font.Name }
         }
         $ignored = [IntPtr]::Zero
         [void][Nocturne.Gdi]::SendMessageTimeoutW([IntPtr]0xffff, 0x001D, [IntPtr]::Zero, [IntPtr]::Zero, 2, 1000, [ref]$ignored)
-        Write-Host 'Font installed for the current user.' -ForegroundColor Green
+        Write-Host "Font installed for the current user ($installed files)." -ForegroundColor Green
+        if ($failed) { Write-Warning ("Could not install: " + ($failed -join ', ')) }
     }
     finally {
         Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
